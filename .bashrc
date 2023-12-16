@@ -120,7 +120,7 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
+export TESSDATA_PREFIX=/home/dell/Github/tessdata
 export CXX=/usr/bin/g++
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
