@@ -10,13 +10,13 @@
   (add-hook 'emacs-startup-hook
             (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
 
-
+
 ;; Process performance tuning
 
 (setq read-process-output-max (* 4 1024 1024))
 (setq process-adaptive-read-buffering nil)
 
-
+
 ;; Bootstrap config
 
 ;; You will most likely need to adjust this font size for your system!
@@ -544,11 +544,11 @@
         "xelatex -interaction nonstopmode -output-directory %o %f"
         "xelatex -interaction nonstopmode -output-directory %o %f"))
 
-
-
+;;; Yasneppet
+(require 'yasnippet)
+(yas-global-mode 1)
 
 ;; Make gc pauses faster by decreasing the threshold.
-(setq gc-cons-threshold (* 2 1000 1000))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
