@@ -87,7 +87,7 @@
   :config
   ;; load default config
   (require 'smartparens-config))
-
+(global-set-key (kbd "C-`") 'sp-kill-symbol)
 
 (scroll-bar-mode -1)        ; Disable visible scrollbar
 (tool-bar-mode -1)          ; Disable the toolbar
@@ -453,8 +453,8 @@
   ;;(setq vterm-shell "zsh")                       ;; Set this to customize the shell to launch
   (setq vterm-max-scrollback 10000))
 (global-set-key (kbd "C-<f9>") 'multi-vterm)
-
-
+(global-set-key (kbd "C-<prior>") 'multi-vterm-prev)
+(global-set-key (kbd "C-<next>") 'multi-vterm-next)
 
 (use-package dired
   :ensure nil
@@ -517,7 +517,7 @@
 
 ;;; Jump mode
 (global-set-key (kbd "C-;") 'avy-goto-char-timer)
-
+(global-set-key (kbd "M-g M-g") 'avy-goto-line)
 
 ;;; Markdown mode
 (add-hook 'markdown-mode-hook
@@ -538,6 +538,14 @@
   (setopt ellama-provider
 		  (make-llm-ollama
 		   :chat-model "starling-lm")))
+;;; Latex config
+(setq org-latex-pdf-process
+      '("xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"))
+
+
+
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
@@ -547,10 +555,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(smartparens ellama all-the-icons-dired all-the-icons good-scroll good-scroll-mode org-roam multi-vterm expand-region which-key visual-fill-column typescript-mode rainbow-delimiters pyvenv python-mode org-bullets no-littering multiple-cursors lsp-ui lsp-ivy ivy-rich ivy-prescient helpful general forge evil-nerd-commenter evil-collection eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles dap-mode counsel-projectile company-box command-log-mode auto-package-update)))
+   '(yasnippet-snippets yasnippet auctex smartparens ellama all-the-icons-dired all-the-icons good-scroll good-scroll-mode org-roam multi-vterm expand-region which-key visual-fill-column typescript-mode rainbow-delimiters pyvenv python-mode org-bullets no-littering multiple-cursors lsp-ui lsp-ivy ivy-rich ivy-prescient helpful general forge evil-nerd-commenter evil-collection eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles dap-mode counsel-projectile company-box command-log-mode auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'scroll-left 'disabled nil)
