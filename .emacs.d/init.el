@@ -481,6 +481,7 @@
 
 ;;; Scroll mode
 (good-scroll-mode 1)
+()
 (global-set-key (kbd "M-n") 'good-scroll-up)
 (global-set-key (kbd "M-p") 'good-scroll-down)
 (use-package expand-region
@@ -495,6 +496,14 @@
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
+;;; Smartparens
+(use-package smartparens-mode
+  :ensure smartparens  ;; install the package
+  :hook (prog-mode text-mode markdown-mode) ;; add `smartparens-mode` to these hooks
+  :config
+  ;; load default config
+  (require 'smartparens-config))
+(global-set-key (kbd "C-<delete>") 'sp-unwrap-sexp) 
 (windmove-default-keybindings)
 ;;; Org roam
 (use-package org-roam
@@ -548,6 +557,8 @@
 (require 'yasnippet)
 (yas-global-mode 1)
 
+(drag-stuff-global-mode 1)
+(drag-stuff-define-keys)
 ;; Make gc pauses faster by decreasing the threshold.
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -555,7 +566,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(yasnippet-snippets yasnippet auctex smartparens ellama all-the-icons-dired all-the-icons good-scroll good-scroll-mode org-roam multi-vterm expand-region which-key visual-fill-column typescript-mode rainbow-delimiters pyvenv python-mode org-bullets no-littering multiple-cursors lsp-ui lsp-ivy ivy-rich ivy-prescient helpful general forge evil-nerd-commenter evil-collection eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles dap-mode counsel-projectile company-box command-log-mode auto-package-update)))
+   '(drag-stuff rust-mode yasnippet-snippets yasnippet auctex smartparens ellama all-the-icons good-scroll good-scroll-mode org-roam multi-vterm expand-region which-key visual-fill-column typescript-mode rainbow-delimiters pyvenv python-mode org-bullets no-littering multiple-cursors ivy-rich ivy-prescient helpful general forge eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles counsel-projectile company-box command-log-mode auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

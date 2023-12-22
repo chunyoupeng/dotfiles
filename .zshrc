@@ -101,6 +101,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # some more ls aliases
+alias br="broot"
 alias ls="exa --color=auto"
 alias ll='ls -alF'
 alias la='ls -A'
