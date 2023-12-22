@@ -557,9 +557,22 @@
 (require 'yasnippet)
 (yas-global-mode 1)
 
+
+;;; For quicker editing
+(global-set-key (kbd "C-<return>") 'move-end-of-line-and-newline)
 (drag-stuff-global-mode 1)
 (drag-stuff-define-keys)
-;; Make gc pauses faster by decreasing the threshold.
+
+
+;;; Custom functions
+(defun move-end-of-line-and-newline ()
+  "Move to the end of the line and insert a newline."
+  (interactive)
+  (move-end-of-line nil)
+  (newline))
+
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
