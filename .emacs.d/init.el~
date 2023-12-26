@@ -455,6 +455,7 @@
 (global-set-key (kbd "C-<f9>") 'multi-vterm)
 (global-set-key (kbd "C-<prior>") 'multi-vterm-prev)
 (global-set-key (kbd "C-<next>") 'multi-vterm-next)
+(global-set-key (kbd "<f12>") 'compile)
 
 (use-package dired
   :ensure nil
@@ -557,20 +558,33 @@
 (require 'yasnippet)
 (yas-global-mode 1)
 
+
+;;; For quicker editing
+(global-set-key (kbd "C-<return>") 'move-end-of-line-and-newline)
 (drag-stuff-global-mode 1)
 (drag-stuff-define-keys)
-;; Make gc pauses faster by decreasing the threshold.
+
+
+;;; Custom functions
+(defun move-end-of-line-and-newline ()
+  "Move to the end of the line and insert a newline."
+  (interactive)
+  (move-end-of-line nil)
+  (newline))
+
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(drag-stuff rust-mode yasnippet-snippets yasnippet auctex smartparens ellama all-the-icons-dired all-the-icons good-scroll good-scroll-mode org-roam multi-vterm expand-region which-key visual-fill-column typescript-mode rainbow-delimiters pyvenv python-mode org-bullets no-littering multiple-cursors ivy-rich ivy-prescient helpful general forge eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles counsel-projectile company-box command-log-mode auto-package-update)))
+   '(drag-stuff rust-mode yasnippet-snippets yasnippet auctex smartparens ellama all-the-icons good-scroll good-scroll-mode org-roam multi-vterm expand-region which-key visual-fill-column typescript-mode rainbow-delimiters pyvenv python-mode org-bullets no-littering multiple-cursors ivy-rich ivy-prescient helpful general forge eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles counsel-projectile company-box command-log-mode auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:inherit nil :extend nil :stipple nil :background "#292D3E" :foreground "#EEFFFF" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight regular :height 151 :width condensed :foundry "FBI " :family "Iosevka Nerd Font")))))
 (put 'scroll-left 'disabled nil)

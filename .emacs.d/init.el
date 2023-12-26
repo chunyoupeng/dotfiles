@@ -455,6 +455,7 @@
 (global-set-key (kbd "C-<f9>") 'multi-vterm)
 (global-set-key (kbd "C-<prior>") 'multi-vterm-prev)
 (global-set-key (kbd "C-<next>") 'multi-vterm-next)
+(global-set-key (kbd "<f12>") 'compile)
 
 (use-package dired
   :ensure nil
@@ -504,6 +505,8 @@
   ;; load default config
   (require 'smartparens-config))
 (global-set-key (kbd "C-<delete>") 'sp-unwrap-sexp) 
+(global-set-key (kbd "C-^") 'sp-copy-sexp) 
+
 (windmove-default-keybindings)
 ;;; Org roam
 (use-package org-roam
@@ -585,5 +588,5 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:inherit nil :extend nil :stipple nil :background "#292D3E" :foreground "#EEFFFF" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight regular :height 151 :width condensed :foundry "FBI " :family "Iosevka Nerd Font")))))
 (put 'scroll-left 'disabled nil)
