@@ -456,6 +456,8 @@
 (global-set-key (kbd "C-<prior>") 'multi-vterm-prev)
 (global-set-key (kbd "C-<next>") 'multi-vterm-next)
 (global-set-key (kbd "<f12>") 'compile)
+(setq shell-command-switch "-ic")
+(setq explicit-shell-file-name "/usr/bin/zsh")
 
 (use-package dired
   :ensure nil
