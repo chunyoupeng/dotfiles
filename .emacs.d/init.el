@@ -65,6 +65,9 @@
   (auto-package-update-maybe)
   (auto-package-update-at-time "09:00"))
 
+(add-to-list 'load-path "lisp")
+(defalias 'y-or-n-p 'yes-or-no-p)
+
 ;; NOTE: If you want to move everything out of the ~/.emacs.d folder
 ;; reliably, set `user-emacs-directory` before loading no-littering!
 ;(setq user-emacs-directory "~/.cache/emacs")
@@ -260,12 +263,8 @@
 
   (setq org-agenda-files
         '("~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Habits.org"
           "~/Projects/Code/emacs-from-scratch/OrgFiles/Birthdays.org"))
 
-  (require 'org-habit)
-  (add-to-list 'org-modules 'org-habit)
-  (setq org-habit-graph-column 60)
 
   (setq org-todo-keywords
     '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
@@ -510,24 +509,47 @@
 (global-set-key (kbd "C-^") 'sp-copy-sexp) 
 
 (windmove-default-keybindings)
-;;; Org roam
-(use-package org-roam
-  :ensure t
-  :custom
-  (org-roam-directory (file-truename "/home/dell/Dropbox/RoamNotes"))
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n g" . org-roam-graph)
-         ("C-c n i" . org-roam-node-insert)
-         ("C-c n c" . org-roam-capture)
-         ;; Dailies
-         ("C-c n j" . org-roam-dailies-capture-today))
-  :config
-  ;; If you're using a vertical completion framework, you might want a more informative completion interface
-  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-  (org-roam-db-autosync-mode)1
-  ;; If using org-roam-protocol
-  (require 'org-roam-protocol))
+;; ;;; Org roam
+;; (use-package org-roam
+;;   :ensure t
+;;   :custom
+;;   (org-roam-directory (file-truename "/home/dell/Dropbox/RoamNotes"))
+;;   :bind (("C-c n l" . org-roam-buffer-toggle)
+;;          ("C-c n f" . org-roam-node-find)
+;;          ("C-c n g" . org-roam-graph)
+;;          ("C-c n i" . org-roam-node-insert)
+;;          ("C-c n c" . org-roam-capture)
+;;          ;; Dailies
+;;          ("C-c n j" . org-roam-dailies-capture-today))
+;;   :config
+;;   ;; If you're using a vertical completion framework, you might want a more informative completion interface
+;;   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+;;   (org-roam-db-autosync-mode)
+;;   ;; If using org-roam-protocol
+;;   (require 'org-roam-protocol))
+
+(require 'org-roam)
+(add-to-list 'load-path "lisp") ; installation as above
+(setq org-roam-directory (file-truename "/home/dell/Dropbox/RoamNotes")) 
+;; file-truename is optional; it seems required when you use symbolic
+;; links, which Org-roam does not resolve
+(setq org-roam-file-extensions '("org" "md")) ; enable Org-roam for a markdown extension
+(require 'md-roam)
+(md-roam-mode 1) ; md-roam-mode must be active before org-roam-db-sync
+(setq md-roam-file-extension "md") ; default "md". Specify an extension such as "markdown"
+(org-roam-db-autosync-mode 1) ; autosync-mode triggers db-sync. md-roam-mode must be already active
+;;; Template
+(add-to-list 'org-roam-capture-templates
+    '("m" "Markdown" plain "" :target
+        (file+head "%<%Y-%m-%dT%H%M%S>.md"
+"---\ntitle: ${title}\nid: %<%Y-%m-%dT%H%M%S>\ncategory: \n---\n")
+    :unnarrowed t))
+
+;;;; Org-roam Keybinding
+(define-key global-map (kbd "C-c n f") #'org-roam-node-find)
+(define-key global-map (kbd "C-c n c") #'org-roam-capture)
+(define-key global-map (kbd "C-c n i") #'org-roam-node-insert)
+(define-key global-map (kbd "C-c n l") #'org-roam-buffer-toggle)
 
 ;;; Jump mode
 (global-set-key (kbd "C-;") 'avy-goto-char-timer)
