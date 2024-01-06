@@ -70,10 +70,6 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
-
-source $ZSH/oh-my-zsh.sh
-
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -101,80 +97,6 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # some more ls aliases
-alias br="broot"
-alias ls="exa --color=auto"
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='exa -lah -S  --color=auto --group-directories-first'
-alias e="emacsclient"
-alias gm="git commit -am"
-alias gt="git status"
-alias cat="batcat"
-alias copy='xclip -selection clipboard'
-alias openchat="python -m ochat.serving.openai_api_server --model openchat/openchat_3.5 --engine-use-ray --worker-use-ray --tensor-parallel-size 2"
-alias antlr4="java -jar /usr/local/lib/antlr-4.13.1-complete.jar"
-alias grun="java org.antlr.v4.gui.TestRig"
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # export TESSDATA_PREFIX=		
-export CLASSPATH=".:/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH"
-export CXX=/usr/bin/g++
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus
-export LANG=zh_CN.UTF-8
-export LC_ALL=zh_CN.UTF-8
-export http_proxy=http://127.0.0.1:7890
-export https_proxy=http://127.0.0.1:7890
-export LLAMA_CUBLAS=1
-export PATH=/usr/local/cuda-12.2/bin:$PATH
-export CUDA_HOME=/usr/local/cuda-12.2
-export LD_LIBRARY_PATH=/usr/local/cuda-12.2/lib64:$LD_LIBRARY_PATH
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/dell/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/dell/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/dell/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/dell/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-eval "$(zoxide init zsh)"
-eval "$(starship init zsh)"
-alias cl="clear"
-alias cd..="cd .."
-alias nlp="conda activate nlp"
-ec() {
-    emacsclient "$(find . -type f | fzf)"
-}
-. "$HOME/.cargo/env"
 
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/zsh_completion" ] && \. "$NVM_DIR/zsh_completion"  # This loads nvm zsh_completion
-
-# Vterm path
-vterm_printf() {
-    if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ]); then
-        # Tell tmux to pass the escape sequences through
-        printf "\ePtmux;\e\e]%s\007\e\\" "$1"
-    elif [ "${TERM%%-*}" = "screen" ]; then
-        # GNU screen (screen, screen-256color, screen-256color-bce)
-        printf "\eP\e]%s\007\e\\" "$1"
-    else
-        printf "\e]%s\e\\" "$1"
-    fi
-}
-vterm_prompt_end() {
-    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
-}
-setopt PROMPT_SUBST
-PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'

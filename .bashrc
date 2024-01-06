@@ -162,3 +162,10 @@ source /home/dell/.config/broot/launcher/bash/br
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# -------------- bartekspitza:dotfiles install ---------------
+source /home/dell/dotfiles/shell/aliases.sh
+source /home/dell/dotfiles/shell/basic.sh
+source /home/dell/dotfiles/shell/path.sh
+source /home/dell/dotfiles/shell/vterm.sh
+# -------------- bartekspitza:dotfiles install ---------------
