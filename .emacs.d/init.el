@@ -4,12 +4,27 @@
 
 ;; Adjust garbage collection thresholds during startup, and thereafter
 
-(let ((normal-gc-cons-threshold (* 20 1024 1024))
-      (init-gc-cons-threshold (* 128 1024 1024)))
-  (setq gc-cons-threshold init-gc-cons-threshold)
-  (add-hook 'emacs-startup-hook
-            (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
+(let ((minver "26.1"))
+  (when (version< emacs-version minver)
+    (error "Your Emacs is too old -- this config requires v%s or higher" minver)))
+(when (version< emacs-version "27.1")
+  (message "Your Emacs is old, and some functionality in this config will be disabled. Please upgrade if possible."))
 
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+
+(defconst *spell-check-support-enabled* nil) ;; Enable with t if you prefer
+(defconst *is-a-mac* (eq system-type 'darwin))
+
+;; Adjust garbage collection thresholds during startup, and thereafter
+(defvar normal-gc-cons-threshold (* 20 1024 1024)
+  "Normal threshold for garbage collection.")
+
+(defvar init-gc-cons-threshold (* 128 1024 1024)
+  "Initial threshold for garbage collection.")
+
+(setq gc-cons-threshold init-gc-cons-threshold)
+(add-hook 'emacs-startup-hook
+          (lambda () (setq gc-cons-threshold normal-gc-cons-threshold)))
 
 ;; Process performance tuning
 
@@ -26,8 +41,6 @@
 ;; Make frame transparency overridable
 (defvar efs/frame-transparency '(95 . 95))
 
-;; The default is 800 kilobytes.  Measured in bytes.
-(setq gc-cons-threshold (* 50 1000 1000))
 
 (defun efs/display-startup-time ()
   (message "Emacs loaded in %s with %d garbage collections."
@@ -56,16 +69,16 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-(use-package auto-package-update
-  :custom
-  (auto-package-update-interval 7)
-  (auto-package-update-prompt-before-update t)
-  (auto-package-update-hide-results t)
-  :config
-  (auto-package-update-maybe)
-  (auto-package-update-at-time "09:00"))
+;; (use-package auto-package-update
+;;   :custom
+;;   (auto-package-update-interval 7)
+;;   (auto-package-update-prompt-before-update t)
+;;   (auto-package-update-hide-results t)
+;;   :config
+;;   (auto-package-update-maybe)
+;;   (auto-package-update-at-time "09:00"))
 
-(add-to-list 'load-path "lisp")
+(add-to-list 'load-path "~/.emacs.d/lisp/")
 (defalias 'y-or-n-p 'yes-or-no-p)
 
 ;; NOTE: If you want to move everything out of the ~/.emacs.d folder
@@ -510,46 +523,46 @@
 
 (windmove-default-keybindings)
 ;; ;;; Org roam
-;; (use-package org-roam
-;;   :ensure t
-;;   :custom
-;;   (org-roam-directory (file-truename "/home/dell/Dropbox/RoamNotes"))
-;;   :bind (("C-c n l" . org-roam-buffer-toggle)
-;;          ("C-c n f" . org-roam-node-find)
-;;          ("C-c n g" . org-roam-graph)
-;;          ("C-c n i" . org-roam-node-insert)
-;;          ("C-c n c" . org-roam-capture)
-;;          ;; Dailies
-;;          ("C-c n j" . org-roam-dailies-capture-today))
-;;   :config
-;;   ;; If you're using a vertical completion framework, you might want a more informative completion interface
-;;   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-;;   (org-roam-db-autosync-mode)
-;;   ;; If using org-roam-protocol
-;;   (require 'org-roam-protocol))
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory (file-truename "/home/dell/Dropbox/RoamNotes"))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n g" . org-roam-graph)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n c" . org-roam-capture)
+         ;; Dailies
+         ("C-c n j" . org-roam-dailies-capture-today))
+  :config
+  ;; If you're using a vertical completion framework, you might want a more informative completion interface
+  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  (org-roam-db-autosync-mode)
+  ;; If using org-roam-protocol
+  (require 'org-roam-protocol))
 
-(require 'org-roam)
-(add-to-list 'load-path "lisp") ; installation as above
-(setq org-roam-directory (file-truename "/home/dell/Dropbox/RoamNotes")) 
-;; file-truename is optional; it seems required when you use symbolic
-;; links, which Org-roam does not resolve
-(setq org-roam-file-extensions '("org" "md")) ; enable Org-roam for a markdown extension
-(require 'md-roam)
-(md-roam-mode 1) ; md-roam-mode must be active before org-roam-db-sync
-(setq md-roam-file-extension "md") ; default "md". Specify an extension such as "markdown"
-(org-roam-db-autosync-mode 1) ; autosync-mode triggers db-sync. md-roam-mode must be already active
-;;; Template
-(add-to-list 'org-roam-capture-templates
-    '("m" "Markdown" plain "" :target
-        (file+head "%<%Y-%m-%dT%H%M%S>.md"
-"---\ntitle: ${title}\nid: %<%Y-%m-%dT%H%M%S>\ncategory: \n---\n")
-    :unnarrowed t))
+;; (require 'org-roam)
+;; (add-to-list 'load-path "lisp/") ; installation as above
+;; (setq org-roam-directory (file-truename "/home/dell/Dropbox/RoamNotes")) 
+;; ;; file-truename is optional; it seems required when you use symbolic
+;; ;; links, which Org-roam does not resolve
+;; (setq org-roam-file-extensions '("org" "md")) ; enable Org-roam for a markdown extension
+;; (require 'md-roam)
+;; (md-roam-mode 1) ; md-roam-mode must be active before org-roam-db-sync
+;; (setq md-roam-file-extension "md") ; default "md". Specify an extension such as "markdown"
+;; (org-roam-db-autosync-mode 1) ; autosync-mode triggers db-sync. md-roam-mode must be already active
+;; ;;; Template
+;; (add-to-list 'org-roam-capture-templates
+;;     '("m" "Markdown" plain "" :target
+;;         (file+head "%<%Y-%m-%dT%H%M%S>.md"
+;; "---\ntitle: ${title}\nid: %<%Y-%m-%dT%H%M%S>\ncategory: \n---\n")
+;;     :unnarrowed t))
 
-;;;; Org-roam Keybinding
-(define-key global-map (kbd "C-c n f") #'org-roam-node-find)
-(define-key global-map (kbd "C-c n c") #'org-roam-capture)
-(define-key global-map (kbd "C-c n i") #'org-roam-node-insert)
-(define-key global-map (kbd "C-c n l") #'org-roam-buffer-toggle)
+;; ;;;; Org-roam Keybinding
+;; (define-key global-map (kbd "C-c n f") #'org-roam-node-find)
+;; (define-key global-map (kbd "C-c n c") #'org-roam-capture)
+;; (define-key global-map (kbd "C-c n i") #'org-roam-node-insert)
+;; (define-key global-map (kbd "C-c n l") #'org-roam-buffer-toggle)
 
 ;;; Jump mode
 (global-set-key (kbd "C-;") 'avy-goto-char-timer)
@@ -606,7 +619,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(drag-stuff rust-mode yasnippet-snippets yasnippet auctex smartparens ellama all-the-icons good-scroll good-scroll-mode org-roam multi-vterm expand-region which-key visual-fill-column typescript-mode rainbow-delimiters pyvenv python-mode org-bullets no-littering multiple-cursors ivy-rich ivy-prescient helpful general forge eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles counsel-projectile company-box command-log-mode auto-package-update)))
+   '(avy drag-stuff rust-mode yasnippet-snippets yasnippet smartparens ellama all-the-icons good-scroll good-scroll-mode org-roam multi-vterm expand-region which-key visual-fill-column typescript-mode rainbow-delimiters python-mode org-bullets no-littering multiple-cursors ivy-rich ivy-prescient helpful general forge eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles counsel-projectile company-box command-log-mode auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
