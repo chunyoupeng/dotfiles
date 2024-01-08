@@ -11,6 +11,7 @@
   (message "Your Emacs is old, and some functionality in this config will be disabled. Please upgrade if possible."))
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(add-to-list 'load-path "~/.emacs.d/codeium.el")
 
 (defconst *spell-check-support-enabled* nil) ;; Enable with t if you prefer
 (defconst *is-a-mac* (eq system-type 'darwin))
@@ -94,16 +95,6 @@
 
 (setq inhibit-startup-message t)
 ;; (delete-selection-mode 1)
-
-;;; Parentheses config
-(electric-pair-mode 1)
-(use-package smartparens-mode
-  :ensure smartparens  ;; install the package
-  :hook (prog-mode text-mode markdown-mode python-mode org-mode) ;; add `smartparens-mode` to these hooks
-  :config
-  ;; load default config
-  (require 'smartparens-config))
-(global-set-key (kbd "C-`") 'sp-kill-symbol)
 
 (scroll-bar-mode -1)        ; Disable visible scrollbar
 (tool-bar-mode -1)          ; Disable the toolbar
@@ -423,22 +414,6 @@
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 
 
-(use-package projectile
-  :diminish projectile-mode
-  :config (projectile-mode)
-  :custom ((projectile-completion-system 'ivy))
-  :bind-keymap
-  ("C-c p" . projectile-command-map)
-  :init
-  ;; NOTE: Set this to the folder where you keep your Git repos!
-  (when (file-directory-p "~/Projects/Code")
-    (setq projectile-project-search-path '("~/Projects/Code")))
-  (setq projectile-switch-project-action #'projectile-dired))
-
-(use-package counsel-projectile
-  :after projectile
-  :config (counsel-projectile-mode))
-
 (use-package magit
   :commands magit-status
   :custom
@@ -511,16 +486,6 @@
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
-;;; Smartparens
-(use-package smartparens-mode
-  :ensure smartparens  ;; install the package
-  :hook (prog-mode text-mode markdown-mode) ;; add `smartparens-mode` to these hooks
-  :config
-  ;; load default config
-  (require 'smartparens-config))
-(global-set-key (kbd "C-<delete>") 'sp-unwrap-sexp) 
-(global-set-key (kbd "C-^") 'sp-copy-sexp) 
-
 (windmove-default-keybindings)
 ;; ;;; Org roam
 (use-package org-roam
@@ -567,6 +532,7 @@
 ;;; Jump mode
 (global-set-key (kbd "C-;") 'avy-goto-char-timer)
 (global-set-key (kbd "M-g M-g") 'avy-goto-line)
+(global-set-key (kbd "C-x C-'") 'replace-regexp)
 
 ;;; Markdown mode
 (add-hook 'markdown-mode-hook
@@ -580,13 +546,28 @@
 (with-eval-after-load 'markdown-mode
   (define-key markdown-mode-map (kbd "M-p") nil))
 
+
 (use-package ellama
   :init
   (setopt ellama-language "English")
   (require 'llm-ollama)
   (setopt ellama-provider
 		  (make-llm-ollama
-		   :chat-model "starling-lm")))
+		   :chat-model "dolphin-mixtral" :embedding-model "dolphin-mixtral"))
+  ;; Predefined llm providers for interactive switching.
+  ;; You shouldn't add ollama providers here - it can be selected interactively
+  ;; without it. It is just example.
+  (setopt ellama-providers
+		  '(("openchat" . (make-llm-ollama
+						 :chat-model "openchat:7b-v3.5-q6_K"
+						 :embedding-model "zephyr:7b-beta-q6_K"))
+			("mistral" . (make-llm-ollama
+						  :chat-model "mistral:7b-instruct-v0.2-q6_K"
+						  :embedding-model "mistral:7b-instruct-v0.2-q6_K"))
+			("mixtral" . (make-llm-ollama
+						  :chat-model "mixtral:8x7b-instruct-v0.1-q3_K_M-4k"
+						  :embedding-model "mixtral:8x7b-instruct-v0.1-q3_K_4k-M")))))
+
 ;;; Latex config
 (setq org-latex-pdf-process
       '("xelatex -interaction nonstopmode -output-directory %o %f"
@@ -619,7 +600,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(avy drag-stuff rust-mode yasnippet-snippets yasnippet smartparens ellama all-the-icons good-scroll good-scroll-mode org-roam multi-vterm expand-region which-key visual-fill-column typescript-mode rainbow-delimiters python-mode org-bullets no-littering multiple-cursors ivy-rich ivy-prescient helpful general forge eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles counsel-projectile company-box command-log-mode auto-package-update)))
+   '(ellama codeium avy drag-stuff rust-mode yasnippet-snippets yasnippet smartparens all-the-icons good-scroll good-scroll-mode org-roam multi-vterm expand-region which-key visual-fill-column typescript-mode rainbow-delimiters python-mode org-bullets no-littering multiple-cursors ivy-rich ivy-prescient helpful general forge eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles company-box command-log-mode auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
