@@ -486,6 +486,7 @@
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
+(electric-pair-mode 1)
 (windmove-default-keybindings)
 ;; ;;; Org roam
 (use-package org-roam
@@ -553,20 +554,7 @@
   (require 'llm-ollama)
   (setopt ellama-provider
 		  (make-llm-ollama
-		   :chat-model "dolphin-mixtral" :embedding-model "dolphin-mixtral"))
-  ;; Predefined llm providers for interactive switching.
-  ;; You shouldn't add ollama providers here - it can be selected interactively
-  ;; without it. It is just example.
-  (setopt ellama-providers
-		  '(("openchat" . (make-llm-ollama
-						 :chat-model "openchat:7b-v3.5-q6_K"
-						 :embedding-model "zephyr:7b-beta-q6_K"))
-			("mistral" . (make-llm-ollama
-						  :chat-model "mistral:7b-instruct-v0.2-q6_K"
-						  :embedding-model "mistral:7b-instruct-v0.2-q6_K"))
-			("mixtral" . (make-llm-ollama
-						  :chat-model "mixtral:8x7b-instruct-v0.1-q3_K_M-4k"
-						  :embedding-model "mixtral:8x7b-instruct-v0.1-q3_K_4k-M")))))
+		   :chat-model "openchat:7b-v3.5-q6_K" :embedding-model "openchat:7b-v3.5-q6_K"))
 
 ;;; Latex config
 (setq org-latex-pdf-process
@@ -600,7 +588,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(ellama codeium avy drag-stuff rust-mode yasnippet-snippets yasnippet smartparens all-the-icons good-scroll good-scroll-mode org-roam multi-vterm expand-region which-key visual-fill-column typescript-mode rainbow-delimiters python-mode org-bullets no-littering multiple-cursors ivy-rich ivy-prescient helpful general forge eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles company-box command-log-mode auto-package-update)))
+   '(ellama codeium avy drag-stuff rust-mode yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode org-roam multi-vterm expand-region which-key visual-fill-column typescript-mode rainbow-delimiters python-mode org-bullets no-littering multiple-cursors ivy-rich ivy-prescient helpful general forge eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles company-box command-log-mode auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
