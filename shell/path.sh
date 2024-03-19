@@ -7,6 +7,7 @@ export LANG=zh_CN.UTF-8
 export LC_ALL=zh_CN.UTF-8
 export http_proxy=http://127.0.0.1:7890
 export https_proxy=http://127.0.0.1:7890
+export REDIS_URL=redis://localhost:6379
 export GLOBAL_AGENT_ENVIRONMENT_VARIABLE_NAMESPACE=http://127.0.0.1:7890
 export LLAMA_CUBLAS=1
 export PATH=/usr/local/cuda-12.2/bin:$PATH
