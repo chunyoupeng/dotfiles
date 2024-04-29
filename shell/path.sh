@@ -11,6 +11,7 @@ export REDIS_URL=redis://localhost:6379
 export GLOBAL_AGENT_ENVIRONMENT_VARIABLE_NAMESPACE=http://127.0.0.1:7890
 export LLAMA_CUBLAS=1
 export PATH=/usr/local/cuda-12.2/bin:$PATH
+export BNB_CUDA_VERSION=122
 export PATH=/home/dell/.local/bin:$PATH
 export CUDA_HOME=/usr/local/cuda-12.2
 export LD_LIBRARY_PATH=/usr/local/cuda-12.2/lib64:$LD_LIBRARY_PATH
