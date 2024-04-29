@@ -117,14 +117,13 @@
                 treemacs-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-(set-face-attribute 'default nil :font "Input Mono Condensed" :height efs/default-font-size)
+(set-face-attribute 'default nil :font "Hack Nerd Font"  :height efs/default-font-size)
 
 ;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font "Input Mono Condensed" :height efs/default-font-size)
+(set-face-attribute 'fixed-pitch nil :font "Hack Nerd Font" :height efs/default-font-size)
 
 ;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil :font "Input Mono Condensed" :height efs/default-variable-font-size :weight 'regular)
+(set-face-attribute 'variable-pitch nil :font "Hack Nerd Font" :height efs/default-variable-font-size :weight 'regular)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -181,7 +180,6 @@
   ;; Uncomment the following line to have sorting remembered across sessions!
   ;(prescient-persist-mode 1)
   (ivy-prescient-mode 1))
-
 
 
 (use-package magit
@@ -275,7 +273,6 @@
 (with-eval-after-load 'markdown-mode
   (define-key markdown-mode-map (kbd "M-p") nil))
 
-
 ;;; Latex config
 (setq org-latex-pdf-process
       '("xelatex -interaction nonstopmode -output-directory %o %f"
@@ -285,6 +282,19 @@
 ;;; Yasneppet
 (require 'yasnippet)
 (yas-global-mode 1)
+
+(use-package ellama
+  :init
+  ;; setup key bindings
+  (setopt ellama-keymap-prefix "C-c e")
+  ;; language you want ellama to translate to
+  (require 'llm-ollama)
+  (setopt ellama-provider
+		    (make-llm-ollama
+		     ;; this model should be pulled to use it
+		     ;; value should be the same as you print in terminal during pull
+		     :chat-model "llama3")))
+
 ;;; For quicker editing
 (global-set-key (kbd "C-<return>") 'move-end-of-line-and-newline)
 
