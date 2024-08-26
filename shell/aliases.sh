@@ -39,7 +39,7 @@ fi
 gcm() {
     # Function to generate commit message
     generate_commit_message() {
-        git diff --cached | llm -m groq-llama3.1-70b "
+        git diff | llm -m groq-llama3.1-70b "
 Below is a diff of all staged changes, coming from the command:
 \`\`\`
 git diff --cached
@@ -73,6 +73,7 @@ commit message:
 
         case "$choice" in
             a|A )
+                git add .
                 if git commit -m "$commit_message"; then
                     echo "Changes committed successfully!"
                     return 0
