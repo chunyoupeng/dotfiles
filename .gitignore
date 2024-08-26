@@ -2,4 +2,5 @@
 .emacs.d/eln-cache
 .emacs.d/etc
 .emacs.d/var
+.emacs.d/ellama-sessions
 *~

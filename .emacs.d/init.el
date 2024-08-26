@@ -326,7 +326,7 @@
   (move-end-of-line nil)
   (newline))
 
-
+(setq dired-use-ls-dired nil)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
