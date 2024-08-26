@@ -63,7 +63,7 @@ commit message:
     # Main script
     echo "Generating AI-powered commit message..."
     commit_message=$(generate_commit_message)
-
+    commit_message=$(echo "$commit_message" | sed 's/^"//;s/"$//')
     while true; do
         echo -e "\nProposed commit message:"
         echo "$commit_message"
