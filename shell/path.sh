@@ -67,4 +67,3 @@ if [ -d "/usr/local/cuda-12.2" ]; then
     export LD_LIBRARY_PATH=/usr/local/cuda-12.2/lib64:$LD_LIBRARY_PATH
 
 fi
-

@@ -129,9 +129,6 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 
-(use-package command-log-mode
-  :commands command-log-mode)
-
 (use-package doom-themes
   :init (load-theme 'doom-palenight t))
 
@@ -166,11 +163,6 @@
   :config
   (ivy-mode 1))
 
-(use-package ivy-rich
-  :after ivy
-  :init
-  (ivy-rich-mode 1))
-
 (use-package counsel
   :bind (("C-M-j" . 'counsel-switch-buffer)
          :map minibuffer-local-map
@@ -188,17 +180,6 @@
   ;; Uncomment the following line to have sorting remembered across sessions!
   ;(prescient-persist-mode 1)
   (ivy-prescient-mode 1))
-
-(use-package helpful
-  :commands (helpful-callable helpful-variable helpful-command helpful-key)
-  :custom
-  (counsel-describe-function-function #'helpful-callable)
-  (counsel-describe-variable-function #'helpful-variable)
-  :bind
-  ([remap describe-function] . counsel-describe-function)
-  ([remap describe-command] . helpful-command)
-  ([remap describe-variable] . counsel-describe-variable)
-  ([remap describe-key] . helpful-key))
 
 
 (use-package magit
@@ -258,7 +239,6 @@
 
 ;;; Scroll mode
 (good-scroll-mode 1)
-()
 (global-set-key (kbd "M-n") 'good-scroll-up)
 (global-set-key (kbd "M-p") 'good-scroll-down)
 (use-package expand-region
@@ -334,7 +314,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(ellama codeium avy drag-stuff rust-mode yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode org-roam multi-vterm expand-region which-key visual-fill-column typescript-mode rainbow-delimiters python-mode org-bullets no-littering multiple-cursors ivy-rich ivy-prescient helpful general forge eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles company-box command-log-mode auto-package-update)))
+   '(all-the-icons-dired ivy-rich ellama codeium avy drag-stuff rust-mode yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode org-roam multi-vterm expand-region which-key visual-fill-column typescript-mode rainbow-delimiters python-mode org-bullets no-littering multiple-cursors ivy-prescient helpful general forge eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles company-box command-log-mode auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
