@@ -6,6 +6,8 @@ alias la='ls -A'
 alias l='exa -lah -S  --color=auto --group-directories-first'
 alias e="emacsclient"
 alias gm="git commit -am"
+alias gam="gaa; gcm"
+alias gd="git diff"
 alias gt="git status"
 alias gaa="git add ."
 alias copy='xclip -selection clipboard'

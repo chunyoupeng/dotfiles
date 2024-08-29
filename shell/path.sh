@@ -12,6 +12,7 @@ export REDIS_URL=redis://localhost:6379
 export GLOBAL_AGENT_ENVIRONMENT_VARIABLE_NAMESPACE=http://127.0.0.1:7890
 export LLAMA_CUBLAS=1
 export PATH=/usr/local/cuda-12.2/bin:$PATH
+export HOMEBREW_NO_AUTO_UPDATE=1
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 eval $(thefuck --alias)
