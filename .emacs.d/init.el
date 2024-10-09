@@ -291,7 +291,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(all-the-icons-dired ivy-rich ellama codeium avy drag-stuff rust-mode yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode org-roam multi-vterm expand-region which-key visual-fill-column typescript-mode rainbow-delimiters python-mode org-bullets no-littering multiple-cursors ivy-prescient helpful general forge eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles company-box command-log-mode auto-package-update)))
+   '(vterm all-the-icons-dired ivy-rich ellama codeium avy drag-stuff rust-mode yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode org-roam expand-region which-key visual-fill-column typescript-mode rainbow-delimiters python-mode org-bullets no-littering ivy-prescient helpful general forge eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles company-box command-log-mode auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
