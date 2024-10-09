@@ -177,8 +177,6 @@
   :custom
   (ivy-prescient-enable-filtering nil)
   :config
-  ;; Uncomment the following line to have sorting remembered across sessions!
-  ;(prescient-persist-mode 1)
   (ivy-prescient-mode 1))
 
 
@@ -187,9 +185,6 @@
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-;; NOTE: Make sure to configure a GitHub token before using this package!
-;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
-;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
 (use-package forge
   :after magit)
 
@@ -273,27 +268,9 @@
 (with-eval-after-load 'markdown-mode
   (define-key markdown-mode-map (kbd "M-p") nil))
 
-;;; Latex config
-(setq org-latex-pdf-process
-      '("xelatex -interaction nonstopmode -output-directory %o %f"
-        "xelatex -interaction nonstopmode -output-directory %o %f"
-        "xelatex -interaction nonstopmode -output-directory %o %f"))
-
 ;;; Yasneppet
 (require 'yasnippet)
 (yas-global-mode 1)
-
-(use-package ellama
-  :init
-  ;; setup key bindings
-  (setopt ellama-keymap-prefix "C-c e")
-  ;; language you want ellama to translate to
-  (require 'llm-ollama)
-  (setopt ellama-provider
-		    (make-llm-ollama
-		     ;; this model should be pulled to use it
-		     ;; value should be the same as you print in terminal during pull
-		     :chat-model "llama3")))
 
 ;;; For quicker editing
 (global-set-key (kbd "C-<return>") 'move-end-of-line-and-newline)

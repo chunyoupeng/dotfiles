@@ -11,6 +11,7 @@ export https_proxy=http://127.0.0.1:7890
 export REDIS_URL=redis://localhost:6379
 export GLOBAL_AGENT_ENVIRONMENT_VARIABLE_NAMESPACE=http://127.0.0.1:7890
 export LLAMA_CUBLAS=1
+export USER_AGENT="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
 export PATH=/usr/local/cuda-12.2/bin:$PATH
 export HOMEBREW_NO_AUTO_UPDATE=1
 eval "$(zoxide init zsh)"
