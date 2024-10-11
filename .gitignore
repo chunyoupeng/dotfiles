@@ -4,3 +4,4 @@
 .emacs.d/var
 .emacs.d/ellama-sessions
 *~
+.emacs.d/pyim/
