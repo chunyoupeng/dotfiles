@@ -1,3 +1,6 @@
+autoload -Uz compinit
+compinit
+bindkey '^P' history-incremental-pattern-search-backward
 # Vterm path
 vterm_printf() {
     if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ]); then

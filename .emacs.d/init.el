@@ -1,7 +1,3 @@
-;; NOTE: init.el is now generated from Emacs.org.  Please edit that file
-;;       in Emacs and init.el will be generated automatically!
-
-
 ;; Adjust garbage collection thresholds during startup, and thereafter
 
 (let ((minver "26.1"))
@@ -11,7 +7,6 @@
   (message "Your Emacs is old, and some functionality in this config will be disabled. Please upgrade if possible."))
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-(add-to-list 'load-path "~/.emacs.d/codeium.el")
 
 (defconst *spell-check-support-enabled* nil) ;; Enable with t if you prefer
 (defconst *is-a-mac* (eq system-type 'darwin))
@@ -32,7 +27,7 @@
 (setq read-process-output-max (* 4 1024 1024))
 (setq process-adaptive-read-buffering nil)
 
-
+(setq make-backup-files nil)
 ;; Bootstrap config
 
 ;; You will most likely need to adjust this font size for your system!
@@ -40,7 +35,7 @@
 (defvar efs/default-variable-font-size 150)
 
 ;; Make frame transparency overridable
-(defvar efs/frame-transparency '(95 . 95))
+(defvar efs/frame-transparency '(99 . 99))
 
 
 (defun efs/display-startup-time ()
@@ -73,16 +68,6 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (defalias 'y-or-n-p 'yes-or-no-p)
 
-;; NOTE: If you want to move everything out of the ~/.emacs.d folder
-;; reliably, set `user-emacs-directory` before loading no-littering!
-;(setq user-emacs-directory "~/.cache/emacs")
-
-(use-package no-littering)
-
-;; no-littering doesn't set this by default so we must place
-;; auto save files in the same path as it uses for sessions
-(setq auto-save-file-name-transforms
-      `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 
 (setq inhibit-startup-message t)
 ;; (delete-selection-mode 1)
@@ -117,21 +102,34 @@
                 treemacs-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
-(set-face-attribute 'default nil :font "Hack Nerd Font"  :height efs/default-font-size)
+(set-face-attribute 'default nil :font "Iosevka Nerd Font Mono"  :height efs/default-font-size)
 
 ;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font "Hack Nerd Font" :height efs/default-font-size)
+(set-face-attribute 'fixed-pitch nil :font "Iosevka Nerd Font Mono" :height efs/default-font-size)
 
 ;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil :font "Hack Nerd Font" :height efs/default-variable-font-size :weight 'regular)
+(set-face-attribute 'variable-pitch nil :font "Iosevka Nerd Font Mono" :height efs/default-variable-font-size :weight 'regular)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 
 (use-package doom-themes
-  :init (load-theme 'doom-palenight t))
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-bluloco-light t)
 
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  (doom-themes-treemacs-config)
+ )
 (use-package all-the-icons)
 
 (use-package doom-modeline
@@ -145,56 +143,15 @@
   (which-key-mode)
   (setq which-key-idle-delay 1))
 
-(use-package ivy
-  :diminish
-  :bind (("C-s" . swiper)
-         :map ivy-minibuffer-map
-         ("TAB" . ivy-alt-done)
-         ("C-l" . ivy-alt-done)
-         ("C-j" . ivy-next-line)
-         ("C-k" . ivy-previous-line)
-         :map ivy-switch-buffer-map
-         ("C-k" . ivy-previous-line)
-         ("C-l" . ivy-done)
-         ("C-d" . ivy-switch-buffer-kill)
-         :map ivy-reverse-i-search-map
-         ("C-k" . ivy-previous-line)
-         ("C-d" . ivy-reverse-i-search-kill))
-  :config
-  (ivy-mode 1))
-
-(use-package counsel
-  :bind (("C-M-j" . 'counsel-switch-buffer)
-         :map minibuffer-local-map
-         ("C-r" . 'counsel-minibuffer-history))
-  :custom
-  (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
-  :config
-  (counsel-mode 1))
-
-(use-package ivy-prescient
-  :after counsel
-  :custom
-  (ivy-prescient-enable-filtering nil)
-  :config
-  (ivy-prescient-mode 1))
-
 
 (use-package magit
   :commands magit-status
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-(use-package forge
-  :after magit)
-
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-
-;;; Term configuration
-(use-package eterm-256color
-  :hook (term-mode . eterm-256color-mode))
 
 (use-package vterm
   :commands vterm
@@ -208,29 +165,6 @@
 (global-set-key (kbd "<f12>") 'compile)
 (setq shell-command-switch "-ic")
 (setq explicit-shell-file-name "/usr/bin/zsh")
-
-(use-package dired
-  :ensure nil
-  :commands (dired dired-jump)
-  :bind (("C-x C-j" . dired-jump))
-  :custom ((dired-listing-switches "-agho --group-directories-first"))
-)
-(use-package dired-single
-  :commands (dired dired-jump))
-
-(use-package all-the-icons-dired
-  :hook (dired-mode . all-the-icons-dired-mode))
-
-(use-package dired-open
-  :commands (dired dired-jump)
-  :config
-  ;; Doesn't work as expected!
-  ;;(add-to-list 'dired-open-functions #'dired-open-xdg t)
-  (setq dired-open-extensions '(("png" . "feh")
-                                ("mkv" . "mpv"))))
-
-(use-package dired-hide-dotfiles
-  :hook (dired-mode . dired-hide-dotfiles-mode))
 
 ;;; Scroll mode
 (good-scroll-mode 1)
@@ -252,10 +186,9 @@
 (windmove-default-keybindings)
 
 ;;; Jump mode
-(global-set-key (kbd "C-;") 'avy-goto-char-timer)
-(global-set-key (kbd "M-g M-g") 'avy-goto-line)
 (global-set-key (kbd "C-x C-'") 'replace-regexp)
-
+(global-set-key (kbd "C-x C-b") 'buffer-menu)
+(global-set-key (kbd "C-c C-/") 'insert-current-date-ymd)
 ;;; Markdown mode
 (add-hook 'markdown-mode-hook
           (lambda ()
@@ -275,6 +208,19 @@
 ;;; For quicker editing
 (global-set-key (kbd "C-<return>") 'move-end-of-line-and-newline)
 
+(require 'pyim)
+;(require 'pyim-basedict) ; 拼音词库设置，五笔用户 *不需要* 此行设置
+;(pyim-basedict-enable)   ; 拼音词库，五笔用户 *不需要* 此行设置
+(setq default-input-method "pyim")
+
+(require 'pyim-wbdict)
+(pyim-wbdict-v86-enable)
+(setq pyim-default-scheme 'wubi)
+
+(defun insert-current-date-ymd ()
+  "Insert the current date in YYYY-MM-DD format."
+  (interactive)
+  (insert (format-time-string "%Y-%m-%d")))
 
 ;;; Custom functions
 (defun move-end-of-line-and-newline ()
@@ -291,7 +237,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(vterm all-the-icons-dired ivy-rich ellama codeium avy drag-stuff rust-mode yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode org-roam expand-region which-key visual-fill-column typescript-mode rainbow-delimiters python-mode org-bullets no-littering ivy-prescient helpful general forge eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles company-box command-log-mode auto-package-update)))
+   '(pyim-wbdict multi-vterm vterm all-the-icons-dired ivy-rich ellama codeium avy drag-stuff rust-mode yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode org-roam expand-region which-key visual-fill-column typescript-mode rainbow-delimiters python-mode org-bullets no-littering ivy-prescient helpful general forge eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-hide-dotfiles company-box command-log-mode auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
