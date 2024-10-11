@@ -5,11 +5,13 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='exa -lah -S  --color=auto --group-directories-first'
 alias e="emacsclient"
-alias gm="git commit -am"
+alias gm="git commit -m"
 alias gam="gaa; gcm"
 alias gd="git diff"
 alias gt="git status"
-alias gaa="git add ."
+alias gaa="git add --all"
+alias ga="git add"
+alias gg="git lg"
 alias copy='xclip -selection clipboard'
 alias antlr4="java -jar /usr/local/lib/antlr-4.13.1-complete.jar"
 alias grun="java org.antlr.v4.gui.TestRig"
