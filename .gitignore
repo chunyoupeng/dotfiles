@@ -3,5 +3,12 @@
 .emacs.d/etc
 .emacs.d/var
 .emacs.d/ellama-sessions
+.emacs.d/auto-save-list
+.emacs.d/transient
+.emacs.d/.last-package-update-day
+.emacs.d/.uptimes.el
+.emacs.d/tramp/
+.emacs.d/.mc-lists.el
 *~
 .emacs.d/pyim/
+.DS_Store

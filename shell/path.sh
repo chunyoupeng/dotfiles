@@ -25,39 +25,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH=/opt/homebrew/bin:$PATH
     export PATH=/Users/pengyo/.local/bin:$PATH
     export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-    # >>> conda initialize >>>
-    # !! Contents within this block are managed by 'conda init' !!
-    __conda_setup="$('/Users/pengyo/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-    if [ $? -eq 0 ]; then
-	eval "$__conda_setup"
-    else
-	if [ -f "/Users/pengyo/miniconda3/etc/profile.d/conda.sh" ]; then
-	    . "/Users/pengyo/miniconda3/etc/profile.d/conda.sh"
-	else
-	    export PATH="/Users/pengyo/miniconda3/bin:$PATH"
-	fi
-    fi
-    unset __conda_setup
-    # <<< conda initialize <<<
-
 else
     # Ubuntu specific exports
     export PATH="$PATH:/usr/local/bin/code"  # Adjust if VSCode is installed differently
-    # >>> conda initialize >>>
-    # !! Contents within this block are managed by 'conda init' !!
-    __conda_setup="$('/home/dell/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-    if [ $? -eq 0 ]; then
-	eval "$__conda_setup"
-    else
-	if [ -f "/home/dell/miniconda3/etc/profile.d/conda.sh" ]; then
-            . "/home/dell/miniconda3/etc/profile.d/conda.sh"
-	else
-            export PATH="/home/dell/miniconda3/bin:$PATH"
-	fi
-    fi
-    unset __conda_setup
-    # <<< conda initialize <<<
-
 fi
 
 # CUDA and related configurations for machines with CUDA installed

@@ -68,7 +68,7 @@
 (windmove-default-keybindings)
 
 ;; Frame transparency and fullscreen
-(defvar efs/frame-transparency '(90 . 90)
+(defvar efs/frame-transparency '(95 . 95)
   "Frame transparency setting (active . inactive).")
 
 (set-frame-parameter (selected-frame) 'alpha efs/frame-transparency)
@@ -144,8 +144,8 @@
 (use-package multi-vterm
   :commands (multi-vterm multi-vterm-prev multi-vterm-next)
   :bind (("C-<f9>" . multi-vterm)
-         ("C-<prior>" . multi-vterm-prev)
-         ("C-<next>" . multi-vterm-next)))
+         ("C-c <left>" . multi-vterm-prev)
+         ("C-c <right>" . multi-vterm-next)))
 
 (use-package good-scroll
   :defer t
