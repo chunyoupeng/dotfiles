@@ -67,6 +67,8 @@
 ;; Use shift + arrow to move between buffer
 (windmove-default-keybindings)
 
+;; Pair auto generation
+(electric-pair-mode 1)
 ;; Frame transparency and fullscreen
 (defvar efs/frame-transparency '(95 . 95)
   "Frame transparency setting (active . inactive).")
