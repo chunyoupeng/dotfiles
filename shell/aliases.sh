@@ -21,7 +21,7 @@ alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPA
 #   sleep 10; alert
 alias cl="clear"
 alias cd..="cd .."
-alias nlp="conda activate nlp"
+alias pp="python -m pip install --trusted-host files.pythonhosted.org --trusted-host pypi.org --trusted-host pypi.python.org "
 ec() {
     emacsclient "$(find . -type f | fzf)"
 }
