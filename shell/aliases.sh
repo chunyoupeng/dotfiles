@@ -5,7 +5,7 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='exa -lah -S  --color=auto --group-directories-first'
 alias e="emacsclient"
-alias gm="git commit -m"
+alias gmm="git commit -m"
 alias gam="gaa; gcm"
 alias gd="git diff"
 alias gt="git status"
