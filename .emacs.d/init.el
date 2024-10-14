@@ -207,13 +207,13 @@
 
 ;; Disable line numbers in markdown mode
 (use-package markdown-mode
-  :hook (markdown-mode . (lambda ()
-                            (display-line-numbers-mode 0)))
   :config
   ;; Remove specific key bindings if necessary
   (with-eval-after-load 'markdown-mode
     (define-key markdown-mode-map (kbd "M-n") nil)
-    (define-key markdown-mode-map (kbd "M-p") nil)))
+    (define-key markdown-mode-map (kbd "M-p") nil)
+    (define-key markdown-mode-map (kbd "C-c <left>") nil)
+    (define-key markdown-mode-map (kbd "C-c <right>") nil)))
 
 ;;; Dired Settings
 

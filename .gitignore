@@ -11,4 +11,4 @@
 .emacs.d/.mc-lists.el
 *~
 .emacs.d/pyim/
-.DS_Store
+.emacs.d/tramp

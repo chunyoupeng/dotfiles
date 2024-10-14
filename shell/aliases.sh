@@ -12,7 +12,7 @@ alias ga="git add"
 alias gg="git lg"
 alias cl="clear"
 alias cd..="cd .."
-alias pp="python -m pip install --trusted-host files.pythonhosted.org --trusted-host pypi.org --trusted-host pypi.python.org "
+alias pi="python -m pip install --trusted-host files.pythonhosted.org --trusted-host pypi.org --trusted-host pypi.python.org "
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     alias cat=bat
