@@ -204,6 +204,7 @@
 (global-set-key (kbd "C-<return>") 'move-end-of-line-and-newline)
 (global-set-key (kbd "C-c \\") 'insert-current-date-ymd)
 (global-set-key (kbd "C-c *") 'Chinese-word-count)
+(global-set-key (kbd "C-c d") 'my-create-diary-entry)
 
 ;;; Hooks and Mode Configurations
 
@@ -259,6 +260,17 @@ If BEG or END is not specified, count the whole buffer."
                    )))
     (message "字数: %d"
              (+ (car list) (car (last list))))))
+
+(defun my-create-diary-entry ()
+  "Prompt for a file name and create a new file in the ~/diary/ directory."
+  (interactive)
+  (let ((diary-dir "/Users/pengyo/Documents/notes/Journal/2024")
+        (filename (read-string "Enter file name: ")))
+    (unless (file-directory-p diary-dir)
+      (make-directory diary-dir))
+    (find-file (concat diary-dir filename))))
+    
+
 
 ;;; Custom Set Variables and Faces
 
