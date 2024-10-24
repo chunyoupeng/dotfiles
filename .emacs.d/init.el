@@ -169,13 +169,6 @@
   :config
   (yas-global-mode 1))
 
-(use-package pyim
-  :config
-  (setq default-input-method "pyim")
-  (require 'pyim-wbdict)
-  (pyim-wbdict-v86-enable)
-  (setq pyim-default-scheme 'wubi))
-
 ;;; Performance Tuning
 
 ;; Increase read-process-output-max for better performance with language servers
@@ -203,9 +196,9 @@
 (global-set-key (kbd "<f12>") 'compile)
 (global-set-key (kbd "C-<return>") 'move-end-of-line-and-newline)
 (global-set-key (kbd "C-c \\") 'insert-current-date-ymd)
-(global-set-key (kbd "C-c *") 'Chinese-word-count)
-(global-set-key (kbd "C-c d") 'my-create-diary-entry)
-
+(global-set-key (kbd "C-c *") 'count-chinese-characters)
+(global-set-key (kbd "C-c d") 'open-journal-2024)
+(global-set-key (kbd "C-x C-b") 'buffer-menu)
 ;;; Hooks and Mode Configurations
 
 ;; Disable line numbers in markdown mode
@@ -219,7 +212,7 @@
     (define-key markdown-mode-map (kbd "C-c <right>") nil)))
 
 ;;; Dired Settings
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 中文字符统计
 (setq dired-use-ls-dired nil)
 
 (defvar word-count-rule-chinese "\\cc"
@@ -241,7 +234,7 @@
     count))
 
 ;;;###autoload
-(defun Chinese-word-count (&optional beg end)
+(defun count-chinese-characters (&optional beg end)
   "Chinese user preferred word count.
 If BEG or END is not specified, count the whole buffer."
   (interactive (if (use-region-p)
@@ -249,39 +242,38 @@ If BEG or END is not specified, count the whole buffer."
                  (list (point-min) (point-max))))
   (let ((min (if (and beg end) beg (point-min)))
         (max (if (and beg end) end (point-max)))
-        list)
+        list total-count)
     (setq list
           (mapcar (lambda (r)
                     (special-words-count min max r))
                   (list
                    word-count-rule-chinese
                    word-count-rule-nonespace
-                   word-count-rule-ansci
-                   )))
-    (message "字数: %d"
-             (+ (car list) (car (last list))))))
+                   word-count-rule-ansci)))
+    (setq total-count (+ (car list) (car (last list))))
+    (message "字数: %d" total-count)
+    total-count))  ;; 返回计算的字数
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun my-create-diary-entry ()
-  "Prompt for a file name and create a new file in the ~/diary/ directory."
+(defun open-journal-2024 ()
+  "Open the 2024 journal file."
   (interactive)
-  (let ((diary-dir "/Users/pengyo/Documents/notes/Journal/2024")
-        (filename (read-string "Enter file name: ")))
-    (unless (file-directory-p diary-dir)
-      (make-directory diary-dir))
-    (find-file (concat diary-dir filename))))
-    
-
+  (find-file "/Users/pengyo/Documents/notes/Journal/2024"))
 
 ;;; Custom Set Variables and Faces
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
- ;; Ensure there is only one instance of this block
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(pyim-wbdict multi-vterm vterm all-the-icons-dired ivy-rich avy drag-stuff yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode  expand-region which-key rainbow-delimiters no-littering ivy-prescient helpful general forge eshell-git-prompt doom-themes doom-modeline dired-single dired-hide-dotfiles company-box command-log-mode auto-package-update)))
+   '(multi-vterm vterm all-the-icons-dired ivy-rich avy drag-stuff yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode expand-region which-key rainbow-delimiters no-littering ivy-prescient helpful general forge eshell-git-prompt doom-themes doom-modeline dired-single dired-hide-dotfiles company-box command-log-mode auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
- ;; Ensure there is only one instance of this block
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :extend nil :stipple nil :background "#FFFFFF" :foreground "#000000" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight regular :height 151 :width condensed :foundry "FBI " :family "Iosevka Nerd Font")))))
 
 ;;; Performance Enhancements
