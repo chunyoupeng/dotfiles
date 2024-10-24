@@ -203,6 +203,7 @@
 (global-set-key (kbd "<f12>") 'compile)
 (global-set-key (kbd "C-<return>") 'move-end-of-line-and-newline)
 (global-set-key (kbd "C-c \\") 'insert-current-date-ymd)
+(global-set-key (kbd "C-c *") 'Chinese-word-count)
 
 ;;; Hooks and Mode Configurations
 
