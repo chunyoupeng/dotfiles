@@ -202,6 +202,7 @@
 
 (global-set-key (kbd "<f12>") 'compile)
 (global-set-key (kbd "C-<return>") 'move-end-of-line-and-newline)
+(global-set-key (kbd "C-c \\") 'insert-current-date-ymd)
 
 ;;; Hooks and Mode Configurations
 
@@ -218,6 +219,45 @@
 ;;; Dired Settings
 
 (setq dired-use-ls-dired nil)
+
+(defvar word-count-rule-chinese "\\cc"
+  "A regexp string to match Chinese characters.")
+
+(defvar word-count-rule-nonespace "[^[:space:]]"
+  "A regexp string to match none pace characters.")
+
+(defvar word-count-rule-ansci "[A-Za-z0-9][A-Za-z0-9[:punct:]]*"
+  "A regexp string to match none pace characters.")
+
+(defun special-words-count (start end regexp)
+  "Count the word from START to END with REGEXP."
+  (let ((count 0))
+    (save-excursion
+      (goto-char start)
+      (while (and (< (point) end) (re-search-forward regexp end t))
+        (setq count (1+ count))))
+    count))
+
+;;;###autoload
+(defun Chinese-word-count (&optional beg end)
+  "Chinese user preferred word count.
+If BEG or END is not specified, count the whole buffer."
+  (interactive (if (use-region-p)
+                   (list (region-beginning) (region-end))
+                 (list (point-min) (point-max))))
+  (let ((min (if (and beg end) beg (point-min)))
+        (max (if (and beg end) end (point-max)))
+        list)
+    (setq list
+          (mapcar (lambda (r)
+                    (special-words-count min max r))
+                  (list
+                   word-count-rule-chinese
+                   word-count-rule-nonespace
+                   word-count-rule-ansci
+                   )))
+    (message "字数: %d"
+             (+ (car list) (car (last list))))))
 
 ;;; Custom Set Variables and Faces
 
