@@ -264,6 +264,15 @@ If BEG or END is not specified, count the whole buffer."
   "Open the 2024 journal file."
   (interactive)
   (find-file "/Users/pengyo/Documents/notes/Journal/2024"))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;Macro 删除多余的行
+(defun delete-extra-blank-lines-macro ()
+  "Delete extra blank lines using keyboard macro method."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (not (eobp))
+      (delete-blank-lines)    ; 相当于 C-x C-o
+      (forward-line 1))))     ; 相当于 C-n
 
 ;;; Custom Set Variables and Faces
 
