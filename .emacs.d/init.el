@@ -54,7 +54,7 @@
 (setq use-package-always-ensure t
       use-package-always-defer t) ;; Defer loading by default
 
-;;; UI Optimizations
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; UI Optimizations
 
 ;; Disable unnecessary UI elements to reduce overhead
 (setq inhibit-startup-message t)
@@ -118,6 +118,13 @@
   :init (doom-modeline-mode 1)
   :custom ((doom-modeline-height 15)))
 
+
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode)
+  :config
+  (setq rainbow-delimiters-max-face-count 5)) 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;;; Helpful Packages
 
 (use-package which-key
@@ -130,25 +137,24 @@
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode)
-  :config
-  (setq rainbow-delimiters-max-face-count 5)) ;; Limit color count for performance
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Terminal 
 (use-package vterm
+  :defer t
   :commands vterm
   :config
   (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *"
-        vterm-max-scrollback 5000
+        vterm-max-scrollback 1000
         shell-command-switch "-ic"
         explicit-shell-file-name "/usr/bin/zsh"))
 
 (use-package multi-vterm
+  :defer t
   :commands (multi-vterm multi-vterm-prev multi-vterm-next)
   :bind (("C-<f9>" . multi-vterm)
          ("C-c <left>" . multi-vterm-prev)
          ("C-c <right>" . multi-vterm-next)))
-
+(add-hook 'vterm-kill-buffer-hook #'(lambda () (garbage-collect)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package good-scroll
   :defer t
   :config
@@ -191,7 +197,7 @@
   (move-end-of-line nil)
   (newline))
 
-;;; Key Bindings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Key Bindings
 
 (global-set-key (kbd "<f12>") 'compile)
 (global-set-key (kbd "C-<return>") 'move-end-of-line-and-newline)
@@ -199,8 +205,7 @@
 (global-set-key (kbd "C-c *") 'count-chinese-characters)
 (global-set-key (kbd "C-c d") 'open-journal-2024)
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
-;;; Hooks and Mode Configurations
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Disable line numbers in markdown mode
 (use-package markdown-mode
   :config
@@ -294,14 +299,3 @@ If BEG or END is not specified, count the whole buffer."
            gcs-done))
 
 (add-hook 'emacs-startup-hook #'efs/display-startup-time)
-
-;;; Summary
-
-;; This configuration focuses on optimizing performance by:
-;; - Adjusting garbage collection settings
-;; - Deferring package loading where possible
-;; - Minimizing UI overhead
-;; - Optimizing specific packages for better performance
-;; - Cleaning up redundant settings and key bindings
-
-;; Further optimizations can be made based on specific usage patterns and performance profiling.
