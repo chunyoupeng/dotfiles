@@ -98,7 +98,7 @@
                     :weight 'regular)
 
 ;; Make ESC quit prompts
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+;;(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 ;;; Theme and Modeline
 
