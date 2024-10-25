@@ -205,6 +205,7 @@
 (global-set-key (kbd "C-c *") 'count-chinese-characters)
 (global-set-key (kbd "C-c d") 'open-journal-2024)
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
+(global-set-key (kbd "C-c C-SPC") 'delete-extra-blank-lines-macro)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Disable line numbers in markdown mode
 (use-package markdown-mode
@@ -265,15 +266,16 @@ If BEG or END is not specified, count the whole buffer."
   (interactive)
   (find-file "/Users/pengyo/Documents/notes/Journal/2024"))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;Macro 删除多余的行
-(defun delete-extra-blank-lines-macro ()
-  "Delete extra blank lines using keyboard macro method."
-  (interactive)
+(defun delete-extra-blank-lines-macro (beg end)
+  "Delete extra blank lines in region if active, otherwise in whole buffer."
+  (interactive (if (use-region-p)
+                  (list (region-beginning) (region-end))
+                (list (point-min) (point-max))))
   (save-excursion
-    (goto-char (point-min))
-    (while (not (eobp))
-      (delete-blank-lines)    ; 相当于 C-x C-o
-      (forward-line 1))))     ; 相当于 C-n
-
+    (goto-char beg)
+    (while (and (< (point) end) (not (eobp)))
+      (delete-blank-lines)
+      (forward-line 1))))
 ;;; Custom Set Variables and Faces
 
 (custom-set-variables
