@@ -206,6 +206,7 @@
 (global-set-key (kbd "C-c d") 'open-journal-2024)
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
 (global-set-key (kbd "C-c C-SPC") 'delete-extra-blank-lines-macro)
+(global-set-key (kbd "M-》") 'end-of-buffer)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Disable line numbers in markdown mode
 (use-package markdown-mode
