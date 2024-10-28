@@ -145,15 +145,26 @@
   (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *"
         vterm-max-scrollback 1000
         shell-command-switch "-ic"
-        explicit-shell-file-name "/usr/bin/zsh"))
+        explicit-shell-file-name "/bin/zsh"))
 
 (use-package multi-vterm
+  :after vterm
   :defer t
   :commands (multi-vterm multi-vterm-prev multi-vterm-next)
   :bind (("C-<f9>" . multi-vterm)
          ("C-c <left>" . multi-vterm-prev)
          ("C-c <right>" . multi-vterm-next)))
 (add-hook 'vterm-kill-buffer-hook #'(lambda () (garbage-collect)))
+(defun my/cleanup-vterm-buffers ()
+  "关闭不活动的 vterm 缓冲区。"
+  (interactive)
+  (dolist (buffer (buffer-list))
+    (when (and (eq (buffer-local-value 'major-mode buffer) 'vterm-mode)
+               (not (get-buffer-window buffer)))
+      (kill-buffer buffer))))
+
+;; 定期运行清理函数，例如每隔 65 分钟
+(run-at-time nil (* 65 60) #'my/cleanup-vterm-buffers)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package good-scroll
   :defer t
