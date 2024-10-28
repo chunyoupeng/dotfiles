@@ -207,6 +207,7 @@
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
 (global-set-key (kbd "C-c C-SPC") 'delete-extra-blank-lines-macro)
 (global-set-key (kbd "M-》") 'end-of-buffer)
+(global-set-key (kbd "M-《") 'beginning-of-buffer)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Disable line numbers in markdown mode
 (use-package markdown-mode
