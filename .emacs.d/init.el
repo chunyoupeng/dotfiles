@@ -148,7 +148,6 @@
         explicit-shell-file-name "/bin/zsh"))
 
 (use-package multi-vterm
-  :after vterm
   :defer t
   :commands (multi-vterm multi-vterm-prev multi-vterm-next)
   :bind (("C-<f9>" . multi-vterm)
