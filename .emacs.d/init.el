@@ -117,7 +117,27 @@
 (use-package doom-modeline
   :init (doom-modeline-mode 1)
   :custom ((doom-modeline-height 15)))
+;; Function to get the Chinese character count dynamically for the mode line
 
+(defun count-chinese-characters-dynamic ()
+  "Return the Chinese character count for the mode line."
+  (let ((count (count-chinese-characters)))
+    (format "字数: %d" count))) ;; Display the count with label
+
+;; Define mode-line-format to include buffer percentage and Chinese character count
+(setq-default mode-line-format
+              '((:eval
+                 (list
+                  ;; Display the buffer name
+                  "%b "
+                  ;; Custom message
+                  " | Chunyou | "
+                  ;; Major mode
+                  (format "[%s]" mode-name)
+                  ;; Line and column info
+                  " | Line %l"
+                  ;; Dynamic Chinese character count
+                  "% | " (count-chinese-characters-dynamic)))))
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode)
@@ -269,7 +289,6 @@ If BEG or END is not specified, count the whole buffer."
                    word-count-rule-nonespace
                    word-count-rule-ansci)))
     (setq total-count (+ (car list) (car (last list))))
-    (message "字数: %d" total-count)
     total-count))  ;; 返回计算的字数
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

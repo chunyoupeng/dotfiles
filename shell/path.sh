@@ -25,6 +25,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH=/opt/homebrew/bin:$PATH
     export PATH=/Users/pengyo/.local/bin:$PATH
     export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+    export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
+    export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+    export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 else
     # Ubuntu specific exports
     export PATH="$PATH:/usr/local/bin/code"  # Adjust if VSCode is installed differently

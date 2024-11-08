@@ -1,8 +1,6 @@
 alias shut="sudo shutdown -h now"
-alias ls="exa --color=auto"
 alias ll='ls -alF'
 alias la='ls -A'
-alias l='exa -lah -S  --color=auto --group-directories-first'
 alias gmm="git commit -m"
 alias gam="gaa; gcm"
 alias gd="git diff"
