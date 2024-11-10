@@ -232,6 +232,7 @@
 (global-set-key (kbd "<f12>") 'compile)
 (global-set-key (kbd "C-<return>") 'move-end-of-line-and-newline)
 (global-set-key (kbd "C-c \\") 'insert-current-date-ymd)
+(global-set-key (kbd "C-c 、") 'insert-current-date-ymd)
 (global-set-key (kbd "C-c *") 'count-chinese-characters)
 (global-set-key (kbd "C-c d") 'open-journal-2024)
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
