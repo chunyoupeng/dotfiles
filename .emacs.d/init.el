@@ -66,8 +66,8 @@
 
 ;; Use shift + arrow to move between buffer
 (windmove-default-keybindings)
-
-;; Pair auto generation
+(delete-selection-mode 1)
+;; Pair auto generation 
 (electric-pair-mode 1)
 ;; Frame transparency and fullscreen
 (defvar efs/frame-transparency '(95 . 95)
@@ -153,6 +153,7 @@
   (setq which-key-idle-delay 0.5)) ;; Reduced delay for better responsiveness
 
 (use-package magit
+  :ensure t
   :commands magit-status
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
@@ -242,6 +243,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Disable line numbers in markdown mode
 (use-package markdown-mode
+  :ensure t
   :config
   ;; Remove specific key bindings if necessary
   (with-eval-after-load 'markdown-mode
@@ -316,7 +318,7 @@ If BEG or END is not specified, count the whole buffer."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(multi-vterm vterm all-the-icons-dired ivy-rich avy drag-stuff yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode expand-region which-key rainbow-delimiters no-littering ivy-prescient helpful general forge eshell-git-prompt doom-themes doom-modeline dired-single dired-hide-dotfiles company-box command-log-mode auto-package-update)))
+   '(markdown-mode multiple-cursors magit racket-mode multi-vterm vterm all-the-icons-dired ivy-rich avy drag-stuff yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode expand-region which-key rainbow-delimiters no-littering ivy-prescient helpful general forge eshell-git-prompt doom-themes doom-modeline dired-single dired-hide-dotfiles company-box command-log-mode auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
