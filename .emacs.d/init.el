@@ -70,7 +70,7 @@
 ;; Pair auto generation 
 (electric-pair-mode 1)
 ;; Frame transparency and fullscreen
-(defvar efs/frame-transparency '(95 . 95)
+(defvar efs/frame-transparency '(93 . 93)
   "Frame transparency setting (active . inactive).")
 
 (set-frame-parameter (selected-frame) 'alpha efs/frame-transparency)
@@ -87,10 +87,6 @@
                     :height efs/default-font-size
                     :weight 'regular
                     :width 'condensed)
-
-(set-face-attribute 'fixed-pitch nil
-                    :font "Iosevka Nerd Font Mono"
-                    :height efs/default-font-size)
 
 (set-face-attribute 'variable-pitch nil
                     :font "Iosevka Nerd Font Mono"
@@ -131,7 +127,7 @@
                   ;; Display the buffer name
                   "%b "
                   ;; Custom message
-                  " | Chunyou | "
+                  " | "
                   ;; Major mode
                   (format "[%s]" mode-name)
                   ;; Line and column info
