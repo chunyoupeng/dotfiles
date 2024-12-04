@@ -70,7 +70,7 @@
 ;; Pair auto generation 
 (electric-pair-mode 1)
 ;; Frame transparency and fullscreen
-(defvar efs/frame-transparency '(93 . 93)
+(defvar efs/frame-transparency '(95 . 95)
   "Frame transparency setting (active . inactive).")
 
 (set-frame-parameter (selected-frame) 'alpha efs/frame-transparency)
@@ -139,10 +139,24 @@
   :hook (prog-mode . rainbow-delimiters-mode)
   :config
   (setq rainbow-delimiters-max-face-count 5)) 
+;; Enable Paredit for Lisp modes
+(use-package paredit
+  :ensure t
+  ;; Enable paredit for Racket mode
+)
+(add-hook 'racket-mode-hook #'paredit-mode)
+(add-hook 'racket-repl-mode-hook #'paredit-mode)
+
+;; Enable paredit for Lisp modes
+(add-hook 'lisp-mode-hook #'paredit-mode)
+(add-hook 'slime-repl-mode-hook #'paredit-mode)
+(add-hook 'lisp-interaction-mode-hook #'paredit-mode)
+(add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;; Helpful Packages
-
+(setq inferior-lisp-program "sbcl")
 (use-package which-key
   :config
   (which-key-mode)
@@ -314,7 +328,7 @@ If BEG or END is not specified, count the whole buffer."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(markdown-mode multiple-cursors magit racket-mode multi-vterm vterm all-the-icons-dired ivy-rich avy drag-stuff yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode expand-region which-key rainbow-delimiters no-littering ivy-prescient helpful general forge eshell-git-prompt doom-themes doom-modeline dired-single dired-hide-dotfiles company-box command-log-mode auto-package-update)))
+   '(slime paredit markdown-mode multiple-cursors magit racket-mode multi-vterm vterm all-the-icons-dired ivy-rich avy drag-stuff yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode expand-region which-key rainbow-delimiters no-littering ivy-prescient helpful general forge eshell-git-prompt doom-themes doom-modeline dired-single dired-hide-dotfiles company-box command-log-mode auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
