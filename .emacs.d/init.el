@@ -250,6 +250,8 @@
 (global-set-key (kbd "C-c C-SPC") 'delete-extra-blank-lines-macro)
 (global-set-key (kbd "M-》") 'end-of-buffer)
 (global-set-key (kbd "M-《") 'beginning-of-buffer)
+(global-set-key (kbd "C-`") 'my-expand-copy-search)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Disable line numbers in markdown mode
 (use-package markdown-mode
@@ -321,6 +323,18 @@ If BEG or END is not specified, count the whole buffer."
       (delete-blank-lines)
       (forward-line 1))))
 ;;; Custom Set Variables and Faces
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun my-expand-copy-search ()
+  "Expand region to the word under the cursor, copy it, and search for it."
+  (interactive)
+  (require 'expand-region) ; Ensure expand-region is loaded
+  (er/expand-region 1)    ; Expand region to select the current word
+  (kill-ring-save (region-beginning) (region-end)) ; Copy the selected word
+  (deactivate-mark)       ; Deactivate the region
+  (let ((search-word (current-kill 0))) ; Get the copied word from the kill-ring
+    (isearch-mode t)                    ; Start incremental search
+    (isearch-yank-string search-word))) ; Paste the word into the search
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -328,7 +342,7 @@ If BEG or END is not specified, count the whole buffer."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(slime paredit markdown-mode multiple-cursors magit racket-mode multi-vterm vterm all-the-icons-dired ivy-rich avy drag-stuff yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode expand-region which-key rainbow-delimiters no-littering ivy-prescient helpful general forge eshell-git-prompt doom-themes doom-modeline dired-single dired-hide-dotfiles company-box command-log-mode auto-package-update)))
+   '(web-mode slime paredit markdown-mode multiple-cursors magit racket-mode multi-vterm vterm all-the-icons-dired ivy-rich avy drag-stuff yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode expand-region which-key rainbow-delimiters no-littering ivy-prescient helpful general forge eshell-git-prompt doom-themes doom-modeline dired-single dired-hide-dotfiles company-box command-log-mode auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
