@@ -100,12 +100,10 @@
 
 (use-package doom-themes
   :config
-  ;; Choose a lighter, more performance-friendly theme
-  (load-theme 'doom-bluloco-light t)
-
-  ;; Enable doom-themes specific features
+  (load-theme 'doom-ayu-dark t)
   (doom-themes-visual-bell-config)
   (doom-themes-neotree-config))
+
 
 (use-package all-the-icons
   :defer t) ;; Defer loading until needed
@@ -141,9 +139,7 @@
   (setq rainbow-delimiters-max-face-count 5)) 
 ;; Enable Paredit for Lisp modes
 (use-package paredit
-  :ensure t
-  ;; Enable paredit for Racket mode
-)
+  :ensure t)
 (add-hook 'racket-mode-hook #'paredit-mode)
 (add-hook 'racket-repl-mode-hook #'paredit-mode)
 
@@ -251,7 +247,8 @@
 (global-set-key (kbd "M-》") 'end-of-buffer)
 (global-set-key (kbd "M-《") 'beginning-of-buffer)
 (global-set-key (kbd "C-`") 'my-expand-copy-search)
-
+(global-set-key (kbd "M-m") 'point-to-register)      ;; Set mark at current point
+(global-set-key (kbd "M-'") 'jump-to-register)      ;; Jump to mark
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Disable line numbers in markdown mode
 (use-package markdown-mode
@@ -263,7 +260,11 @@
     (define-key markdown-mode-map (kbd "M-p") nil)
     (define-key markdown-mode-map (kbd "C-c <left>") nil)
     (define-key markdown-mode-map (kbd "C-c <right>") nil)))
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Lisp Mode 
+(with-eval-after-load 'slime
+  (define-key slime-mode-indirect-map (kbd "M-n") nil)
+  (define-key slime-mode-indirect-map (kbd "M-p") nil))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Dired Settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 中文字符统计
 (setq dired-use-ls-dired nil)

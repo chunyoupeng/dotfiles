@@ -2,7 +2,25 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("Meeting"
+(("sicp"
+ (filename . "~/Projects/sicp/")
+ (front-context-string)
+ (rear-context-string . "88 Dec  4 18:28 ")
+ (position . 2942)
+ (last-modified 26467 57707 459984 0))
+("init.el"
+ (filename . "~/dotfiles/.emacs.d/init.el")
+ (front-context-string . ";; -*- lexical-b")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 26465 15653 872405 0))
+("todolist-cl"
+ (filename . "~/Projects/todolist-cl/")
+ (front-context-string . ".git\n  -rw-r--r-")
+ (rear-context-string . "84 Dec 17 12:49 ")
+ (position . 197)
+ (last-modified 26465 2942 503597 0))
+("Meeting"
  (filename . "~/Documents/Meeting/")
  (front-context-string . ".DS_Store\n  -rw-")
  (rear-context-string . "44 Nov 29 23:12 ")
