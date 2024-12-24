@@ -99,11 +99,11 @@
 ;;; Theme and Modeline
 
 (use-package doom-themes
+  :ensure t
   :config
-  (load-theme 'doom-ayu-dark t)
   (doom-themes-visual-bell-config)
   (doom-themes-neotree-config))
-
+(load-theme 'doom-ayu-dark t)
 
 (use-package all-the-icons
   :defer t) ;; Defer loading until needed
@@ -145,7 +145,7 @@
 
 ;; Enable paredit for Lisp modes
 (add-hook 'lisp-mode-hook #'paredit-mode)
-(add-hook 'slime-repl-mode-hook #'paredit-mode)
+(add-hook 'sly-repl-mode-hook #'paredit-mode)
 (add-hook 'lisp-interaction-mode-hook #'paredit-mode)
 (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
 
@@ -261,9 +261,9 @@
     (define-key markdown-mode-map (kbd "C-c <left>") nil)
     (define-key markdown-mode-map (kbd "C-c <right>") nil)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Lisp Mode 
-(with-eval-after-load 'slime
-  (define-key slime-mode-indirect-map (kbd "M-n") nil)
-  (define-key slime-mode-indirect-map (kbd "M-p") nil))
+(with-eval-after-load 'sly
+  (define-key sly-editing-mode-map (kbd "M-n") nil)
+  (define-key sly-editing-mode-map (kbd "M-p") nil))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Dired Settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 中文字符统计
@@ -343,7 +343,7 @@ If BEG or END is not specified, count the whole buffer."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(web-mode slime paredit markdown-mode multiple-cursors magit racket-mode multi-vterm vterm all-the-icons-dired ivy-rich avy drag-stuff yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode expand-region which-key rainbow-delimiters no-littering ivy-prescient helpful general forge eshell-git-prompt doom-themes doom-modeline dired-single dired-hide-dotfiles company-box command-log-mode auto-package-update)))
+   '(sly web-mode paredit markdown-mode multiple-cursors magit racket-mode multi-vterm vterm all-the-icons-dired ivy-rich avy drag-stuff yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode expand-region which-key rainbow-delimiters no-littering ivy-prescient helpful general forge eshell-git-prompt doom-themes doom-modeline dired-single dired-hide-dotfiles company-box command-log-mode auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
