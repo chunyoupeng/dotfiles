@@ -101,10 +101,13 @@
 (use-package doom-themes
   :ensure t
   :config
-  (doom-themes-visual-bell-config)
-  (doom-themes-neotree-config))
-(load-theme 'doom-ayu-dark t)
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+)
 
+(load-theme 'doom-gruvbox t)
+(global-git-gutter-mode t)
 (use-package all-the-icons
   :defer t) ;; Defer loading until needed
 
@@ -180,17 +183,18 @@
   :bind (("C-<f9>" . multi-vterm)
          ("C-c <left>" . multi-vterm-prev)
          ("C-c <right>" . multi-vterm-next)))
-(add-hook 'vterm-kill-buffer-hook #'(lambda () (garbage-collect)))
-(defun my/cleanup-vterm-buffers ()
-  "关闭不活动的 vterm 缓冲区。"
-  (interactive)
-  (dolist (buffer (buffer-list))
-    (when (and (eq (buffer-local-value 'major-mode buffer) 'vterm-mode)
-               (not (get-buffer-window buffer)))
-      (kill-buffer buffer))))
 
-;; 定期运行清理函数，例如每隔 65 分钟
-(run-at-time nil (* 65 60) #'my/cleanup-vterm-buffers)
+(add-hook 'vterm-kill-buffer-hook #'(lambda () (garbage-collect)))
+;; (defun my/cleanup-vterm-buffers ()
+;;   "关闭不活动的 vterm 缓冲区。"
+;;   (interactive)
+;;   (dolist (buffer (buffer-list))
+;;     (when (and (eq (buffer-local-value 'major-mode buffer) 'vterm-mode)
+;;                (not (get-buffer-window buffer)))
+;;       (kill-buffer buffer))))
+
+;; ;; 定期运行清理函数，例如每隔 65 分钟
+;; (run-at-time nil (* 65 60) #'my/cleanup-vterm-buffers)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package good-scroll
   :defer t
@@ -234,14 +238,21 @@
   (move-end-of-line nil)
   (newline))
 
+(defun insert-line-above ()
+  "Insert the line above at any position"
+  (interactive)
+  (move-beginning-of-line 1)
+  (open-line 1))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Key Bindings
 
 (global-set-key (kbd "<f12>") 'compile)
-(global-set-key (kbd "C-<return>") 'move-end-of-line-and-newline)
+(global-set-key (kbd "s-<return>") 'move-end-of-line-and-newline)
+(global-set-key (kbd "s-S-<return>") 'insert-line-above)
 (global-set-key (kbd "C-c \\") 'insert-current-date-ymd)
 (global-set-key (kbd "C-c 、") 'insert-current-date-ymd)
 (global-set-key (kbd "C-c *") 'count-chinese-characters)
-(global-set-key (kbd "C-c d") 'open-journal-2024)
+(global-set-key (kbd "C-c d") 'open-journal-2025)
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
 (global-set-key (kbd "C-c C-SPC") 'delete-extra-blank-lines-macro)
 (global-set-key (kbd "M-》") 'end-of-buffer)
@@ -312,6 +323,11 @@ If BEG or END is not specified, count the whole buffer."
   "Open the 2024 journal file."
   (interactive)
   (find-file "/Users/pengyo/Documents/notes/Journal/2024"))
+
+(defun open-journal-2025 ()
+  "Open the 2025 journal file."
+  (interactive)
+  (find-file "/Users/pengyo/Documents/notes/Journal/2025"))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;Macro 删除多余的行
 (defun delete-extra-blank-lines-macro (beg end)
   "Delete extra blank lines in region if active, otherwise in whole buffer."
@@ -342,14 +358,17 @@ If BEG or END is not specified, count the whole buffer."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes '(doom-dark+ doom-one doom-challenger-deep))
+ '(custom-safe-themes
+   '("88f7ee5594021c60a4a6a1c275614103de8c1435d6d08cc58882f920e0cec65e" "8c7e832be864674c220f9a9361c851917a93f921fedb7717b1b5ece47690c098" default))
  '(package-selected-packages
-   '(sly web-mode paredit markdown-mode multiple-cursors magit racket-mode multi-vterm vterm all-the-icons-dired ivy-rich avy drag-stuff yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode expand-region which-key rainbow-delimiters no-littering ivy-prescient helpful general forge eshell-git-prompt doom-themes doom-modeline dired-single dired-hide-dotfiles company-box command-log-mode auto-package-update)))
+   '(git-gutter json-navigator json-mode sly web-mode paredit markdown-mode multiple-cursors magit racket-mode multi-vterm vterm all-the-icons-dired ivy-rich avy drag-stuff yasnippet-snippets yasnippet all-the-icons good-scroll good-scroll-mode expand-region which-key rainbow-delimiters no-littering ivy-prescient helpful general forge eshell-git-prompt doom-themes doom-modeline dired-single dired-hide-dotfiles company-box command-log-mode auto-package-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :extend nil :stipple nil :background "#FFFFFF" :foreground "#000000" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight regular :height 151 :width condensed :foundry "FBI " :family "Iosevka Nerd Font")))))
+ '(default ((t (:inherit nil :extend nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight regular :height 150 :width normal :foundry "nil" :family "Iosevka Nerd Font")))))
 
 ;;; Performance Enhancements
 
